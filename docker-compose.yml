@@ -1,4 +1,4 @@
-version: "3"
+version: "3.5"
 # START PROXY
 services:
   proxy:
@@ -8,6 +8,8 @@ services:
       - "443:443"
     environment:
       DEFAULT_HOST: ${DEFAULT_HOST}
+    labels:
+      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
     volumes:
       - "/var/run/docker.sock:/tmp/docker.sock"
       - "./client_max_body_size.conf:/etc/nginx/conf.d/client_max_body_size.conf"
@@ -18,7 +20,7 @@ services:
       - "${NGINX_VOLUME_PATH}/html:/usr/share/nginx/html"
     restart: unless-stopped
     networks:
-      - ${PROXY_NETWORK_NAME}
+      - base-network
   # END PROXY
   # START LETSENCRYPT
   letsencrypt:
@@ -33,7 +35,9 @@ services:
     environment:
       DEFAULT_EMAIL: mohammed@ajil.ch
     networks:
-      - ${PROXY_NETWORK_NAME}
+      - base-network
+    depends_on: 
+      - proxy
   # END LETSENCRYPT
 networks:
-  ${PROXY_NETWORK_NAME}:
+  base-network:
