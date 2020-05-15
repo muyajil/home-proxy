@@ -1,38 +1,39 @@
 version: "3"
 # START PROXY
-proxy:
-  image: jwilder/nginx-proxy:latest
-  ports:
-    - "80:80"
-    - "443:443"
-  environment:
-    DEFAULT_HOST: ${DEFAULT_HOST}
-  volumes:
-    - "/var/run/docker.sock:/tmp/docker.sock"
-    - "./client_max_body_size.conf:/etc/nginx/conf.d/client_max_body_size.conf"
-    - "${NGINX_VOLUME_PATH}/htpasswd:/etc/nginx/htpasswd"
-    - "${NGINX_VOLUME_PATH}/certs:/etc/nginx/certs"
-    - "${NGINX_VOLUME_PATH}/dhparam:/etc/nginx/dhparam"
-    - "${NGINX_VOLUME_PATH}/vhost.d:/etc/nginx/vhost.d"
-    - "${NGINX_VOLUME_PATH}/html:/usr/share/nginx/html"
-  restart: unless-stopped
-  networks:
-    - ${PROXY_NETWORK_NAME}
-# END PROXY
-# START LETSENCRYPT
-letsencrypt:
-  image: jrcs/letsencrypt-nginx-proxy-companion:latest
-  volumes:
-    - "/var/run/docker.sock:/var/run/docker.sock:ro"
-    - "${NGINX_VOLUME_PATH}/htpasswd:/etc/nginx/htpasswd"
-    - "${NGINX_VOLUME_PATH}/certs:/etc/nginx/certs"
-    - "${NGINX_VOLUME_PATH}/dhparam:/etc/nginx/dhparam"
-    - "${NGINX_VOLUME_PATH}/vhost.d:/etc/nginx/vhost.d"
-    - "${NGINX_VOLUME_PATH}/html:/usr/share/nginx/html"
-  environment:
-    DEFAULT_EMAIL: mohammed@ajil.ch
-  networks:
-    - ${PROXY_NETWORK_NAME}
-# END LETSENCRYPT
+services:
+  proxy:
+    image: jwilder/nginx-proxy:latest
+    ports:
+      - "80:80"
+      - "443:443"
+    environment:
+      DEFAULT_HOST: ${DEFAULT_HOST}
+    volumes:
+      - "/var/run/docker.sock:/tmp/docker.sock"
+      - "./client_max_body_size.conf:/etc/nginx/conf.d/client_max_body_size.conf"
+      - "${NGINX_VOLUME_PATH}/htpasswd:/etc/nginx/htpasswd"
+      - "${NGINX_VOLUME_PATH}/certs:/etc/nginx/certs"
+      - "${NGINX_VOLUME_PATH}/dhparam:/etc/nginx/dhparam"
+      - "${NGINX_VOLUME_PATH}/vhost.d:/etc/nginx/vhost.d"
+      - "${NGINX_VOLUME_PATH}/html:/usr/share/nginx/html"
+    restart: unless-stopped
+    networks:
+      - ${PROXY_NETWORK_NAME}
+  # END PROXY
+  # START LETSENCRYPT
+  letsencrypt:
+    image: jrcs/letsencrypt-nginx-proxy-companion:latest
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "${NGINX_VOLUME_PATH}/htpasswd:/etc/nginx/htpasswd"
+      - "${NGINX_VOLUME_PATH}/certs:/etc/nginx/certs"
+      - "${NGINX_VOLUME_PATH}/dhparam:/etc/nginx/dhparam"
+      - "${NGINX_VOLUME_PATH}/vhost.d:/etc/nginx/vhost.d"
+      - "${NGINX_VOLUME_PATH}/html:/usr/share/nginx/html"
+    environment:
+      DEFAULT_EMAIL: mohammed@ajil.ch
+    networks:
+      - ${PROXY_NETWORK_NAME}
+  # END LETSENCRYPT
 networks:
   ${PROXY_NETWORK_NAME}:
