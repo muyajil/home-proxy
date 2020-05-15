@@ -1,4 +1,4 @@
-# home-proxy
+# proxy
 A ready to go docker-compose configuration for a proxy service including letsencrypt support.
 
 ## Usage
