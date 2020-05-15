@@ -14,6 +14,9 @@ services:
   some-service:
     networks:
       - base-network
+  networks:
+    base-network:
+      external: true
 ```
 - The container needs the following environment variables to be set:
   - `VIRTUAL_HOST`: The domain under which the container should be available
