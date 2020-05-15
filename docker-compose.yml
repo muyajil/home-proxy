@@ -2,7 +2,6 @@ version: "3"
 # START PROXY
 proxy:
   image: jwilder/nginx-proxy:latest
-  container_name: proxy
   ports:
     - "80:80"
     - "443:443"
@@ -23,7 +22,6 @@ proxy:
 # START LETSENCRYPT
 letsencrypt:
   image: jrcs/letsencrypt-nginx-proxy-companion:latest
-  container_name: letsencrypt
   volumes:
     - "/var/run/docker.sock:/var/run/docker.sock:ro"
     - "${NGINX_VOLUME_PATH}/htpasswd:/etc/nginx/htpasswd"
@@ -33,7 +31,6 @@ letsencrypt:
     - "${NGINX_VOLUME_PATH}/html:/usr/share/nginx/html"
   environment:
     DEFAULT_EMAIL: mohammed@ajil.ch
-    NGINX_PROXY_CONTAINER: proxy
   networks:
     - base-network
 # END LETSENCRYPT
