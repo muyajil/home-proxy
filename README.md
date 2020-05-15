@@ -21,5 +21,4 @@ services:
 - The container needs the following environment variables to be set:
   - `VIRTUAL_HOST`: The domain under which the container should be available
   - `LETSENCRYPT_HOST`: Same as above
-  - `PROXY_LOCATION`: The address under which the proxy finds the container in `base-network`. This is usually just the name of the service.
   - `VIRTUAL_PORT`: Under which port does the container offer the service.
