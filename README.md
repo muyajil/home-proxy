@@ -15,10 +15,6 @@ services:
     networks:
       - base-network
 ```
-      VIRTUAL_HOST: ombi.srv.ajil.ch
-      LETSENCRYPT_HOST: ombi.srv.ajil.ch
-      PROXY_LOCATION: ombi
-      VIRTUAL_PORT: 3579
 - The container needs the following environment variables to be set:
   - `VIRTUAL_HOST`: The domain under which the container should be available
   - `LETSENCRYPT_HOST`: Same as above
