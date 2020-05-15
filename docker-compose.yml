@@ -17,7 +17,7 @@ proxy:
     - "${NGINX_VOLUME_PATH}/html:/usr/share/nginx/html"
   restart: unless-stopped
   networks:
-    - base-network
+    - ${PROXY_NETWORK_NAME}
 # END PROXY
 # START LETSENCRYPT
 letsencrypt:
@@ -32,7 +32,7 @@ letsencrypt:
   environment:
     DEFAULT_EMAIL: mohammed@ajil.ch
   networks:
-    - base-network
+    - ${PROXY_NETWORK_NAME}
 # END LETSENCRYPT
 networks:
-  base-network:
+  ${PROXY_NETWORK_NAME}:
