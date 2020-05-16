@@ -41,3 +41,4 @@ services:
   # END LETSENCRYPT
 networks:
   base-network:
+    name: base-network
