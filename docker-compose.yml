@@ -36,6 +36,7 @@ services:
       DEFAULT_EMAIL: mohammed@ajil.ch
     networks:
       - base-network
+    restart: unless-stopped
     depends_on: 
       - proxy
   # END LETSENCRYPT
